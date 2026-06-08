@@ -1,5 +1,6 @@
 package com.example.todoapp.controller;
 
+import com.example.todoapp.dto.TodoRequest;
 import com.example.todoapp.entity.Todo;
 import com.example.todoapp.service.TodoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
@@ -33,11 +34,13 @@ class TodoControllerTest {
 
     private Todo todo1;
     private Todo todo2;
+    private TodoRequest request1;
 
     @BeforeEach
     void setUp() {
         todo1 = new Todo(1L, "Belajar CI/CD", "Pelajari GitHub Actions", false);
         todo2 = new Todo(2L, "Deploy App", "Deploy ke production", true);
+        request1 = new TodoRequest("Belajar CI/CD", "Pelajari GitHub Actions", false);
     }
 
     @Test
@@ -69,7 +72,7 @@ class TodoControllerTest {
         when(todoService.createTodo(any(Todo.class))).thenReturn(todo1);
         mockMvc.perform(post("/api/todos")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(todo1)))
+            .content(objectMapper.writeValueAsString(request1)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.title").value("Belajar CI/CD"));
     }
@@ -79,7 +82,7 @@ class TodoControllerTest {
         when(todoService.updateTodo(eq(1L), any(Todo.class))).thenReturn(todo1);
         mockMvc.perform(put("/api/todos/1")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(todo1)))
+            .content(objectMapper.writeValueAsString(request1)))
             .andExpect(status().isOk());
     }
 
@@ -89,7 +92,7 @@ class TodoControllerTest {
             .thenThrow(new RuntimeException("Not found"));
         mockMvc.perform(put("/api/todos/99")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(todo1)))
+            .content(objectMapper.writeValueAsString(request1)))
             .andExpect(status().isNotFound());
     }
 
