@@ -15,14 +15,14 @@
 	<description>Todo List App</description>
 
 	<properties>
-		<java.version>17</java.version>
-		<sonar.projectKey>aaiisyah_todoapp</sonar.projectKey>
-		<sonar.organization>aisyah</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.coverage.jacoco.xmlReportPaths>
-		target/site/jacoco/jacoco.xml
-		</sonar.coverage.jacoco.xmlReportPaths>
-	</properties>
+    <java.version>17</java.version>
+    <sonar.projectKey>aaiisyah_todoapp</sonar.projectKey>
+    <sonar.organization>aaiisyah</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.coverage.jacoco.xmlReportPaths>
+        target/site/jacoco/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
+</properties>
 
 	<dependencies>
 		<dependency>
